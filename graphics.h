@@ -82,7 +82,9 @@ void draw_level() {
                 case PLAYER:
                 case COIN:
                 case GEM:
+                case ENEMIE:
                 case EXIT:
+                case MASHROOM:
                     draw_image(air_image, pos, cell_size);
                     break;
                 case WALL:
@@ -99,6 +101,12 @@ void draw_level() {
                     break;
                 case GEM:
                     draw_sprite(gem_sprite, pos, cell_size);
+                    break;
+                case ENEMIE:
+                    draw_sprite(enemie_sprite, pos, cell_size);
+                    break;
+                case MASHROOM:
+                    draw_image(mashroom_image, pos, cell_size);
                     break;
                 default:
                     break;
@@ -124,19 +132,18 @@ void draw_pause_menu() {
 
 void create_victory_menu_background() {
     for (auto &ball : victory_balls) {
-        ball.x  = rand_up_to(screen_size.x);
-        ball.y  = rand_up_to(screen_size.y);
+        ball.x = rand_up_to(screen_size.x);
+        ball.y = rand_up_to(screen_size.y);
         ball.dx = rand_from_to(-VICTORY_BALL_MAX_SPEED, VICTORY_BALL_MAX_SPEED);
         ball.dx *= screen_scale;
-        if (abs(ball.dx) < 0E-1) ball.dx = 1.0f;
+        if (abs(ball.dx) < 0.1f) ball.dx = 1.0f;
         ball.dy = rand_from_to(-VICTORY_BALL_MAX_SPEED, VICTORY_BALL_MAX_SPEED);
         ball.dy *= screen_scale;
-        if (abs(ball.dy) < 0E-1) ball.dy = 1.0f;
+        if (abs(ball.dy) < 0.1f) ball.dy = 1.0f;
         ball.radius = rand_from_to(VICTORY_BALL_MIN_RADIUS, VICTORY_BALL_MAX_RADIUS);
         ball.radius *= screen_scale;
     }
 
-    /* Clear both the front buffer and the back buffer to avoid ghosting of the game graphics. */
     ClearBackground(BLACK);
     EndDrawing();
     BeginDrawing();
@@ -147,22 +154,46 @@ void create_victory_menu_background() {
 
 void animate_victory_menu_background() {
     for (auto &ball : victory_balls) {
-        ball.x += ball.dx;
-        if (ball.x - ball.radius < 0 ||
-            ball.x + ball.radius >= screen_size.x) {
-            ball.dx = -ball.dx;
-        }
-        ball.y += ball.dy;
-        if (ball.y - ball.radius < 0 ||
-            ball.y + ball.radius >= screen_size.y) {
-            ball.dy = -ball.dy;
-        }
+        ball.x += ball.dx * cos(0.01f) - ball.dy * sin(0.01f); // Circular motion
+        ball.y += ball.dx * sin(0.01f) + ball.dy * cos(0.01f);
+
+        // Wrap around the screen edges
+        if (ball.x < 0) ball.x = screen_size.x;
+        if (ball.x > screen_size.x) ball.x = 0;
+        if (ball.y < 0) ball.y = screen_size.y;
+        if (ball.y > screen_size.y) ball.y = 0;
     }
 }
 
 void draw_victory_menu_background() {
     for (auto &ball : victory_balls) {
-        DrawCircleV({ ball.x, ball.y }, ball.radius, VICTORY_BALL_COLOR);
+        // Randomize colors for each shape
+        Color shape_color = {
+            static_cast<unsigned char>(rand() % 255),
+            static_cast<unsigned char>(rand() % 255),
+            static_cast<unsigned char>(rand() % 255),
+            200
+        };
+
+        // Alternate between different shapes
+        int shape_type = rand() % 3; // 0 = circle, 1 = rectangle, 2 = triangle
+
+        if (shape_type == 0) {
+            DrawCircleV({ ball.x, ball.y }, ball.radius, shape_color);
+        } else if (shape_type == 1) {
+            DrawRectangle(
+                static_cast<int>(ball.x - ball.radius),
+                static_cast<int>(ball.y - ball.radius),
+                static_cast<int>(ball.radius * 2),
+                static_cast<int>(ball.radius * 2),
+                shape_color
+            );
+        } else if (shape_type == 2) {
+            Vector2 point1 = { ball.x, ball.y - ball.radius };
+            Vector2 point2 = { ball.x - ball.radius, ball.y + ball.radius };
+            Vector2 point3 = { ball.x + ball.radius, ball.y + ball.radius };
+            DrawTriangle(point1, point2, point3, shape_color);
+        }
     }
 }
 

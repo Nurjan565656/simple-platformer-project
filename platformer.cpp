@@ -72,6 +72,7 @@ int main() {
     InitWindow(1024, 480, "Platformer");
     SetTargetFPS(60);
     SetExitKey(0);
+
     load_fonts();
     load_images();
     load_sounds();

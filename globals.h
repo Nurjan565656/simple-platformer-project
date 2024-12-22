@@ -15,6 +15,8 @@ const char PLAYER = '@';
 const char COIN   = '*';
 const char EXIT   = 'E';
 const char GEM =  'G';
+const char ENEMIE = '-';
+const char MASHROOM = 'M';
 
 /* Levels */
 
@@ -39,7 +41,7 @@ char LEVEL_2_DATA[] = {
     '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#',
-    '#', ' ', '@', ' ', ' ', '#', 'G', ' ', 'E', ' ', '#',
+    '#', ' ', '@', ' ', 'M', '#', 'G', ' ', 'E', ' ', '#',
     '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'
 };
 
@@ -49,7 +51,7 @@ char LEVEL_3_DATA[] = {
     '#', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '*', ' ', '#', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#',
-    '#', ' ', '@', ' ', ' ', '#', ' ', '#', 'E', ' ', '#',
+    '#', ' ', '@', 'M', '-', '#', ' ', '#', 'E', ' ', '#',
     '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'
 };
 
@@ -163,6 +165,7 @@ Text game_over_subtitle = {
 Texture2D wall_image;
 Texture2D air_image;
 Texture2D exit_image;
+Texture2D mashroom_image;
 
 struct sprite {
     size_t frame_count    = 0;
@@ -177,12 +180,15 @@ struct sprite {
 sprite coin_sprite;
 sprite player_sprite;
 sprite gem_sprite;
+sprite enemie_sprite;
 
 /* Sounds */
 
 Sound coin_sound;
 Sound exit_sound;
-
+Sound gem_sound;
+Sound enemie_sound;
+Sound mashroom_sound;
 /* Victory Menu Background */
 
 struct victory_ball {
@@ -191,10 +197,10 @@ struct victory_ball {
     float radius;
 };
 
-const size_t VICTORY_BALL_COUNT     = 2000;
+const size_t VICTORY_BALL_COUNT     = 1000;
 const float VICTORY_BALL_MAX_SPEED  = 2.0f;
-const float VICTORY_BALL_MIN_RADIUS = 2.0f;
-const float VICTORY_BALL_MAX_RADIUS = 3.0f;
+const float VICTORY_BALL_MIN_RADIUS = 5.0f;
+const float VICTORY_BALL_MAX_RADIUS = 15.0f;
 const Color VICTORY_BALL_COLOR      = { 180, 180, 180, 255 };
 const unsigned char VICTORY_BALL_TRAIL_TRANSPARENCY = 10;
 victory_ball victory_balls[VICTORY_BALL_COUNT];

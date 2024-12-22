@@ -43,8 +43,20 @@ void update_player() {
     if (is_colliding(player_pos, GEM)) {
         get_collider(player_pos, GEM) = ' ';
         player_score+=50;
-        PlaySound(coin_sound);
+        PlaySound(gem_sound);
     }
+    if (is_colliding(player_pos, MASHROOM)) {
+        if (player_score==0){
+            PlaySound(mashroom_sound);
+            game_state = GAME_OVER;
+        }
+        else {
+            get_collider(player_pos, MASHROOM) = ' ';
+            player_score-=10;
+            PlaySound(mashroom_sound);
+        }
+    }
+
     if (is_colliding(player_pos, EXIT)) {
         if (level_index == LEVEL_COUNT - 1) {
             game_state = VICTORY;
@@ -54,6 +66,10 @@ void update_player() {
                 PlaySound(exit_sound);
             }
         }
+    if (is_colliding(player_pos, ENEMIE)) {
+        PlaySound(enemie_sound);
+        game_state = GAME_OVER;
+    }
 
     }
 

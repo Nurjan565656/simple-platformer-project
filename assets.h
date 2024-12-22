@@ -19,18 +19,23 @@ void load_images() {
     wall_image    = LoadTexture("data/images/wall.png");
     air_image     = LoadTexture("data/images/air.png");
     exit_image    = LoadTexture("data/images/exit.png");
+    mashroom_image = LoadTexture("data/images/mashroom.png");
     coin_sprite   = load_sprite("data/images/coin/coin",     ".png", 3, true, 18);
     player_sprite = load_sprite("data/images/player/player", ".png", 3, true, 10);
     gem_sprite = load_sprite("data/images/gem/gem", ".png", 2, true, 5);
+    enemie_sprite = load_sprite("data/images/enemie/enemie", ".png", 2, true, 5);
+
 }
 
 void unload_images() {
     UnloadTexture(wall_image);
     UnloadTexture(air_image);
     UnloadTexture(exit_image);
+    UnloadTexture(mashroom_image);
     unload_sprite(player_sprite);
     unload_sprite(coin_sprite);
     unload_sprite(gem_sprite);
+    unload_sprite(enemie_sprite);
 }
 
 void draw_image(Texture2D image, Vector2 pos, float size) {
@@ -111,11 +116,18 @@ void load_sounds() {
 
     coin_sound = LoadSound("data/sounds/coin.wav");
     exit_sound = LoadSound("data/sounds/exit.wav");
+    gem_sound = LoadSound("data/sounds/gem.mp3");
+    enemie_sound = LoadSound("data/sounds/enemie.wav");
+    mashroom_sound = LoadSound("data/sounds/mashroom.wav");
+
 }
 
 void unload_sounds() {
     UnloadSound(coin_sound);
     UnloadSound(exit_sound);
+    UnloadSound(gem_sound);
+    UnloadSound(enemie_sound);
+    UnloadSound(mashroom_sound);
 }
 
 #endif // IMAGES_H
