@@ -32,6 +32,7 @@ void derive_graphics_metrics_from_loaded_level() {
 }
 
 void draw_menu() {
+    ClearBackground(BLACK);
     draw_text(game_title);
     draw_text(game_subtitle);
 }
@@ -80,6 +81,7 @@ void draw_level() {
                 case AIR:
                 case PLAYER:
                 case COIN:
+                case GEM:
                 case EXIT:
                     draw_image(air_image, pos, cell_size);
                     break;
@@ -94,6 +96,9 @@ void draw_level() {
                     break;
                 case EXIT:
                     draw_image(exit_image, pos, cell_size);
+                    break;
+                case GEM:
+                    draw_sprite(gem_sprite, pos, cell_size);
                     break;
                 default:
                     break;
@@ -162,6 +167,7 @@ void draw_victory_menu_background() {
 }
 
 void draw_victory_menu() {
+    ClearBackground(BLACK);
     DrawRectangle(
         0, 0,
         static_cast<int>(screen_size.x), static_cast<int>(screen_size.y),

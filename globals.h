@@ -14,6 +14,7 @@ const char AIR    = ' ';
 const char PLAYER = '@';
 const char COIN   = '*';
 const char EXIT   = 'E';
+const char GEM =  'G';
 
 /* Levels */
 
@@ -38,7 +39,7 @@ char LEVEL_2_DATA[] = {
     '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '#',
     '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#',
-    '#', ' ', '@', ' ', ' ', '#', ' ', ' ', 'E', ' ', '#',
+    '#', ' ', '@', ' ', ' ', '#', 'G', ' ', 'E', ' ', '#',
     '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'
 };
 
@@ -175,6 +176,7 @@ struct sprite {
 
 sprite coin_sprite;
 sprite player_sprite;
+sprite gem_sprite;
 
 /* Sounds */
 

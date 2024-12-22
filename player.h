@@ -40,6 +40,11 @@ void update_player() {
         player_score+=10;
         PlaySound(coin_sound);
     }
+    if (is_colliding(player_pos, GEM)) {
+        get_collider(player_pos, GEM) = ' ';
+        player_score+=50;
+        PlaySound(coin_sound);
+    }
     if (is_colliding(player_pos, EXIT)) {
         if (level_index == LEVEL_COUNT - 1) {
             game_state = VICTORY;

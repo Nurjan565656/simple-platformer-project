@@ -21,6 +21,7 @@ void load_images() {
     exit_image    = LoadTexture("data/images/exit.png");
     coin_sprite   = load_sprite("data/images/coin/coin",     ".png", 3, true, 18);
     player_sprite = load_sprite("data/images/player/player", ".png", 3, true, 10);
+    gem_sprite = load_sprite("data/images/gem/gem", ".png", 2, true, 5);
 }
 
 void unload_images() {
@@ -29,6 +30,7 @@ void unload_images() {
     UnloadTexture(exit_image);
     unload_sprite(player_sprite);
     unload_sprite(coin_sprite);
+    unload_sprite(gem_sprite);
 }
 
 void draw_image(Texture2D image, Vector2 pos, float size) {
