@@ -41,10 +41,16 @@ void update_player() {
         PlaySound(coin_sound);
     }
     if (is_colliding(player_pos, EXIT)) {
-        load_level(1);
-        PlaySound(exit_sound);
+        if (level_index == LEVEL_COUNT - 1) {
+            game_state = VICTORY;
+            create_victory_menu_background();
+        } else {
+                load_level(1);
+                PlaySound(exit_sound);
+            }
+        }
 
     }
-}
+
 
 #endif // PLAYER_H

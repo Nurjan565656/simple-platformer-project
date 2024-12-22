@@ -146,7 +146,17 @@ Text victory_subtitle = {
     "Press Enter to go back to menu",
     { 0.50f, 0.65f }
 };
+Text game_over_text = {
+    "GAME OVER",
+    { 0.50f, 0.50 },
+    100.0f,
+    RED
+};
 
+Text game_over_subtitle = {
+    "Press Enter to go back to menu",
+    { 0.50f, 0.65f }
+};
 /* Images and Sprites */
 
 Texture2D wall_image;
@@ -194,10 +204,14 @@ size_t game_frame = 0;
 /* Game States */
 
 enum game_state {
-    GAME_STATE
-    // TODO
+    MAIN_MENU,
+    PLAYING,
+    PAUSED,
+    VICTORY,
+    GAME_OVER
+
 };
-game_state game_state = GAME_STATE;
+game_state game_state = MAIN_MENU;
 
 /* Forward Declarations */
 

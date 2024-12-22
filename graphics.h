@@ -36,6 +36,18 @@ void draw_menu() {
     draw_text(game_subtitle);
 }
 
+void draw_game_over_screen() {
+    Text score = {
+        "Your Score : " + std::to_string(player_score),
+{ 0.50f, 0.85f },
+    };
+    ClearBackground(BLACK);
+    draw_text(game_over_text);
+    draw_text(game_over_subtitle);
+    draw_text(score);
+
+}
+
 void draw_game_overlay() {
     Text score = {
         "Score " + std::to_string(player_score),

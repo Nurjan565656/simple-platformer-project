@@ -36,11 +36,42 @@ void draw_game() {
     draw_level();
     draw_game_overlay();
 }
+void reset_game() {
+    level_index = 0;
+    player_score = 0;
+    load_level(0);
+}
+
+void update_menu() {
+    if (IsKeyPressed(KEY_ENTER)) {
+        game_state = PLAYING;
+    }
+}
+
+void update_paused() {
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        game_state = PLAYING;
+    }
+}
+
+void update_victory() {
+    if (IsKeyPressed(KEY_ENTER)) {
+        game_state = MAIN_MENU;
+    }
+}
+
+void update_gameplay() {
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        game_state = PAUSED;
+    }
+
+    update_game();
+}
 
 int main() {
     InitWindow(1024, 480, "Platformer");
     SetTargetFPS(60);
-
+    SetExitKey(0);
     load_fonts();
     load_images();
     load_sounds();
@@ -49,8 +80,44 @@ int main() {
     while (!WindowShouldClose()) {
         BeginDrawing();
 
-        update_game();
-        draw_game();
+        if (game_state == PLAYING) {
+            if (IsKeyPressed(KEY_ESCAPE)) {
+                game_state = PAUSED;
+            }
+
+            update_game();
+            draw_game();
+        }
+        else if (game_state == PAUSED) {
+            if (IsKeyPressed(KEY_ESCAPE)) {
+                game_state = PLAYING;
+            }
+
+            draw_pause_menu();
+        }
+        else if (game_state == MAIN_MENU) {
+            if (IsKeyPressed(KEY_ENTER)) {
+                game_state = PLAYING;
+            }
+
+            draw_menu();
+        }
+        else if (game_state == VICTORY) {
+            if (IsKeyPressed(KEY_ENTER)) {
+                reset_game();
+                game_state = MAIN_MENU;
+            }
+
+            draw_victory_menu();
+        }
+        else if (game_state == GAME_OVER) {
+            if (IsKeyPressed(KEY_ENTER)) {
+                reset_game();
+                game_state = MAIN_MENU;
+            }
+
+            draw_game_over_screen();
+        }
 
         EndDrawing();
     }
